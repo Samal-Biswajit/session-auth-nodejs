@@ -2,14 +2,56 @@
   "info": {
     "_postman_id": "8ae3fd90-c647-4cbb-b019-3fb1eca1e81e",
     "name": "Session Auth",
-    "description": "StartFragmentThis collection provides a complete set of API requests to test a session-based authentication system. It covers user registration, login, session management, and protected user operations such as fetching and updating profile data. The collection is designed to validate authentication flows, ensure secure session handling, and demonstrate how authorized access is enforced within a Node.js and PostgreSQL backend in a local development environment.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "53740980",
-    "_collection_link": "https://go.postman.co/collection/53740980-8ae3fd90-c647-4cbb-b019-3fb1eca1e81e?source=collection_link"
+    "description": "This collection provides a complete set of API requests to test a session-based authentication system. It covers user registration, login, session management, and protected user operations such as fetching and updating profile data. The collection is designed to validate authentication flows, ensure secure session handling, and demonstrate how authorized access is enforced within a Node.js and PostgreSQL backend in a local development environment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Get Current User",
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{USER-NAME}}\",\n  \"email\": \"{{USER-EMAIL}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/users/signup",
+          "host": ["{{BASE_URL}}"],
+          "path": ["users", "signup"]
+        },
+        "description": "Creates a new user account by accepting name, email, and password. This endpoint is used to register new users in the system."
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{USER-EMAIL}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/users/login",
+          "host": ["{{BASE_URL}}"],
+          "path": ["users", "login"]
+        },
+        "description": "Authenticates a user by verifying their email and password. On success, a session ID is returned, which is required for accessing protected routes."
+      }
+    },
+    {
+      "name": "Get Authenticated User",
       "request": {
         "method": "GET",
         "header": [
@@ -20,64 +62,27 @@
           }
         ],
         "url": {
-          "raw": "http://localhost:8000/users",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8000",
-          "path": [
-            "users"
-          ]
+          "raw": "{{BASE_URL}}/users",
+          "host": ["{{BASE_URL}}"],
+          "path": ["users"]
         },
-        "description": "StartFragmentAuthenticates a user by submitting their email and password to the login endpoint. If the credentials are valid, the request returns a success response along with a session ID that can be used for authenticated user actions"
-      },
-      "response": []
+        "description": "Retrieves the currently authenticated user's details using a valid session ID. This endpoint verifies session validity and demonstrates access to protected routes."
+      }
     },
     {
-      "name": "Login",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n\r\n    \"email\": \"{{USER-EMAIL}}\",\r\n    \"password\": \"{{USER_PASSWORD}}\"\r\n\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8000/users/login",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8000",
-          "path": [
-            "users",
-            "login"
-          ]
-        },
-        "description": "Authenticates a user by submitting their email and password to the login endpoint. This request is used to verify user credentials and start an authenticated session, typically returning access details needed for subsequent protected requests."
-      },
-      "response": []
-    },
-    {
-      "name": "Update Name",
+      "name": "Update User Profile",
       "request": {
         "method": "PATCH",
         "header": [
           {
             "key": "session-id",
-            "value": "0424d9d9-c43b-467f-bfad-44f32a2add49",
+            "value": "{{SESSION-ID}}",
             "type": "text"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"name\": \"Biswajit Samal\"\r\n}",
+          "raw": "{\n  \"name\": \"{{USER-NAME}}\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -85,74 +90,19 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8000/users",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8000",
-          "path": [
-            "users"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Create an User",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"name\": \"{{USER-NAME}}\",\r\n    \"email\": \"{{USER-EMAIL}}\",\r\n    \"password\": \"{{USER_PASSWORD}}\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+          "raw": "{{BASE_URL}}/users",
+          "host": ["{{BASE_URL}}"],
+          "path": ["users"]
         },
-        "url": {
-          "raw": "http://localhost:8000/users/signup",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8000",
-          "path": [
-            "users",
-            "signup"
-          ]
-        }
-      },
-      "response": []
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
+        "description": "Updates the authenticated user's profile information. Requires a valid session ID to authorize the request."
       }
     }
   ],
   "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:8000"
+    },
     {
       "key": "USER-EMAIL",
       "value": ""
