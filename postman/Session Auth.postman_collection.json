@@ -1,0 +1,173 @@
+{
+  "info": {
+    "_postman_id": "8ae3fd90-c647-4cbb-b019-3fb1eca1e81e",
+    "name": "Session Auth",
+    "description": "StartFragmentThis collection provides a complete set of API requests to test a session-based authentication system. It covers user registration, login, session management, and protected user operations such as fetching and updating profile data. The collection is designed to validate authentication flows, ensure secure session handling, and demonstrate how authorized access is enforced within a Node.js and PostgreSQL backend in a local development environment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53740980",
+    "_collection_link": "https://go.postman.co/collection/53740980-8ae3fd90-c647-4cbb-b019-3fb1eca1e81e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "session-id",
+            "value": "{{SESSION-ID}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8000/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "users"
+          ]
+        },
+        "description": "StartFragmentAuthenticates a user by submitting their email and password to the login endpoint. If the credentials are valid, the request returns a success response along with a session ID that can be used for authenticated user actions"
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\r\n    \"email\": \"{{USER-EMAIL}}\",\r\n    \"password\": \"{{USER_PASSWORD}}\"\r\n\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/users/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "users",
+            "login"
+          ]
+        },
+        "description": "Authenticates a user by submitting their email and password to the login endpoint. This request is used to verify user credentials and start an authenticated session, typically returning access details needed for subsequent protected requests."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Name",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "session-id",
+            "value": "0424d9d9-c43b-467f-bfad-44f32a2add49",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Biswajit Samal\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create an User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"{{USER-NAME}}\",\r\n    \"email\": \"{{USER-EMAIL}}\",\r\n    \"password\": \"{{USER_PASSWORD}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/users/signup",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "users",
+            "signup"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "USER-EMAIL",
+      "value": ""
+    },
+    {
+      "key": "USER_PASSWORD",
+      "value": ""
+    },
+    {
+      "key": "USER-NAME",
+      "value": ""
+    },
+    {
+      "key": "SESSION-ID",
+      "value": ""
+    }
+  ]
+}
